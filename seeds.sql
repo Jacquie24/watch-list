@@ -1,0 +1,1 @@
+INSERT INTO movies (movie) VALUES ('The Edge of the World'), ('Bill and Ted'), ('The Stand');
