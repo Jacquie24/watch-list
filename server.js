@@ -34,10 +34,10 @@ connection.connect(function (err) {
 
 //   VIEWS ROUTES
 app.get("/", (req, res) => {
-//   res.send("All my movies will go here.");
-connection.query(`SELECT * FROM movies`, (err, data) => {
-    res.render("index", {movies: data});
-})
+  //   res.send("All my movies will go here.");
+  connection.query(`SELECT * FROM movies`, (err, data) => {
+    res.render("index", { movies: data });
+  });
 });
 
 app.get("/movies/new", (req, res) => {
@@ -45,7 +45,16 @@ app.get("/movies/new", (req, res) => {
 });
 
 app.get("/movies/:id", (req, res) => {
-  res.send("A single movie will go here");
+  //
+  const movieId = req.params.id;
+  connection.query(
+    `SELECT * FROM movies WHERE id = ?`,
+    [movieId],
+    (err, data) => {
+      console.log(data);
+      res.render("single-movie", data[0]);
+    }
+  );
 });
 
 app.get("/movies/:id/edit", (req, res) => {
@@ -55,9 +64,12 @@ app.get("/movies/:id/edit", (req, res) => {
 // API ROUTES
 
 app.post("api/movies", (req, res) => {
-  res.send(
-    "After creating a new movie in the database, I will return a response."
-  );
+//   res.send(
+//     "After creating a new movie in the database, I will return a response."
+//   );
+connection.query(`INSERT INTO movies (movie) VALUES (?);`, [req.body.movie], (err, result) => {
+    
+})
 });
 
 app.put("/api/movies/:id", (res, req) => {
@@ -66,6 +78,16 @@ app.put("/api/movies/:id", (res, req) => {
 
 app.delete("/api/movies/:id", (req, res) => {
   res.send("After deleting a movie by ID, I will return a response.");
+
+  const movieId = req.params.id;
+
+  connection.query(
+    `DELETE FROM movies WHERE id = ?;`,
+    [movieId],
+    (err, result) => {
+      res.join(result);
+    }
+  );
 });
 
 app.listen(PORT, function () {

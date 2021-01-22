@@ -20,25 +20,10 @@
             <div class="col">
                 {{#each movies}}
                 <h3>{{id}}. {{movie}}</h3>
-                <a href="/movies/{{id}}" class="btn btn-link">View Details</a>
-                <button class="btn btn-danger">Delete</button>
-                <a href="/movies/edit/{{id}}" class="btn btn-link">Update Movie</a>
-                <button class="btn btn-primary">Update</button>
-                            </div>
-        </div>
                 {{/each}}
-
+            </div>
+        </div>
     </div>
-    <script type="text/javascript">
-    $(document).ready(function () {
-        console.log($(this).attr("data-id"));
-        const idToDelete = ($(this).attr("data-id");
-        $.ajax[`/api/movies/${idToDelete}`, {type: "DELETE" }).then((response => {
-            console.log(response);
-        }))
-
-    }
-        </script>
 
 </body>
 
