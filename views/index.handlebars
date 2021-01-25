@@ -1,45 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Planner</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-</head>
-
-<body>
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h1 class="text-center">Movie Watch List</h1>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1 class="text-center">Movie Watch List</h1>
         </div>
-        <div class="row">
-            <div class="col">
-                {{#each movies}}
-                <h3>{{id}}. {{movie}}</h3>
-                <a href="/movies/{{id}}" class="btn btn-link">View Details</a>
-                <button class="btn btn-danger">Delete</button>
-                <a href="/movies/edit/{{id}}" class="btn btn-link">Update Movie</a>
-                <button class="btn btn-primary">Update</button>
-                            </div>
-        </div>
-                {{/each}}
-
     </div>
-    <script type="text/javascript">
+    <div class="row">
+        <div class="col">
+            <a href="/movies/new" class="btn btn-primary">Create a new movie</a>
+            </div>
+    </div>
+            {{#each movies}}
+            <h3>{{id}}. {{movie}}</h3>
+            <a href="/movies/{{id}}" class="btn btn-link">View Details</a>
+            <button class="btn btn-danger" data-id={{id}}>Delete</button>
+            <a href="/movies/{{id}}/edit" class="btn btn-link">Update Movie</a>
+            <button class="btn btn-primary">Update</button>
+        </div>
+    </div>
+    {{/each}}
+
+</div>
+<script type="text/javascript">
     $(document).ready(function () {
-        console.log($(this).attr("data-id"));
-        const idToDelete = ($(this).attr("data-id");
-        $.ajax[`/api/movies/${idToDelete}`, {type: "DELETE" }).then((response => {
-            console.log(response);
-        }))
+        $(".btn-danger").on("click", function () {
+            console.log($(this).attr("data-id"));
+            const idToDelete = $(this).attr("data-id");
+            $.ajax(`/api/movies/${idToDelete}`, { type: "DELETE" }).then((response => {
+                console.log(response);
+                location.reload();
+            })
+            )
+        })
 
-    }
-        </script>
-
-</body>
-
-</html>
+    });
+</script>

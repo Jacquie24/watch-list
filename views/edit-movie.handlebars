@@ -1,22 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Movie</title>
-</head>
-<body>
     <div class="container">
         <div class="row">
             <div class="col">
                 <form id="update-movie-form">
   <div class="mb-3">
 
-    <input type="text" class="form-control" id="movie-title">
+    <input type="text" class="form-control" id="movie-title" value="{{movie}}">
   </div>
 
   </div>
-  <button type="submit" class="btn btn-primary">Update Movie to Watch List</button>
+  <input type="hidden" id="movie-id" value="{{id}}" />
+  <button type="submit" class="btn btn-primary">Update Movie</button>
 </form>
             </div>
         </div>
@@ -27,18 +20,17 @@
         $("update-movie-form").on("submit", function(e){
             e.preventDefault();
             const movieTitle = $("#movie-title").val();
+            const movieId = $("#movie-id").val();
             
-            $.ajax("/api/movies", {
+            $.ajax(`/api/movies/${movieId}`, {
                 type: "PUT", data: {
                     movie: movieTitle
                 }
             }).then(response => {
-                alert("Movie successfully added!");
-                location.redirect("/");
+                alert("Movie successfully updated!");
+                window.location.href = "/";
 
             })
         })
     });
         </script>
-</body>
-</html>
